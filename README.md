@@ -18,3 +18,6 @@
 
 ### tools used to set up the project
 - creat-react-app
+
+### author
+- Jin Ben（coderben2016@126.com）
