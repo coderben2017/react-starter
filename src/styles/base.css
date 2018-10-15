@@ -1,0 +1,47 @@
+/* 全局样式 */
+a,
+a:hover,
+a:active,
+a:link,
+a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* 局部样式 */
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header img {
+  flex-grow: .1;
+  margin-top: -12px;
+  height: 40px;
+}
+
+.header h1 {
+  flex-grow: .1;
+  display: inline;
+  color: #fff;
+}
+
+.header .nav {
+  flex-grow: 2;
+}
+
+.header button {
+  margin: 12px 0;
+  flex-grow: .1;
+  color: #fff;
+}
+
+.menu {
+  line-height: 64px;
+  font-size: 16px;
+}
+
+.content {
+  min-height: 560px;
+  padding: 0 50px;
+}
