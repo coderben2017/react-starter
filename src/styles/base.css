@@ -1,4 +1,7 @@
-/* 全局样式 */
+/** 
+ * 全局样式
+ */
+
 a,
 a:hover,
 a:active,
@@ -8,7 +11,12 @@ a:visited {
   text-decoration: none;
 }
 
-/* 局部样式 */
+
+/**
+ * 局部样式
+ */
+
+/* Home Component */
 .header {
   display: flex;
   justify-content: space-between;
@@ -33,6 +41,7 @@ a:visited {
 .header button {
   margin: 12px 0;
   flex-grow: .1;
+  width: 5rem;
   color: #fff;
 }
 
@@ -44,4 +53,11 @@ a:visited {
 .content {
   min-height: 560px;
   padding: 0 50px;
+}
+
+/* Page404 Component */
+.container-404 {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 30px;
 }
