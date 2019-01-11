@@ -1,5 +1,5 @@
 {
-  "name": "react-demo",
+  "name": "react-starter",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,7 +12,7 @@
     "react-router-dom": "^4.3.1"
   },
   "scripts": {
-    "start": "set port=9000 && react-app-rewired start",
+    "start": "PORT=10000 react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"

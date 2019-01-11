@@ -1,0 +1,9 @@
+.menu {
+    float: left;
+    line-height: 64px;
+    font-size: 16px;
+}
+
+.menu .ant-menu-item {/* 解决小屏幕状态白色字体在白底下看不清问题 */
+    background-color: #001529;
+}

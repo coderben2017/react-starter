@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 
-import '../styles/base.css';
+import './index.css';
 
-export const NavTabs = ({path}) => (
+export default ({path}) => (
   <Menu className="menu" theme="dark" mode="horizontal" selectedKeys={[path]}>
     <Menu.Item key="school">
       <Link to="/school">学校管理</Link>
@@ -16,4 +16,4 @@ export const NavTabs = ({path}) => (
       <Link to="/user">用户管理</Link>
     </Menu.Item>
   </Menu>
-);
+)

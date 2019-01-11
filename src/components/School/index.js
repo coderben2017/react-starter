@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
-class School extends Component {
+export default class Index extends Component {
   render() {
     return (
       <div>school component</div>
-    );
+    )
   }
 }
-
-export default School;
