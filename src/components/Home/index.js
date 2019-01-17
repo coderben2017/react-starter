@@ -2,6 +2,8 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Icon, Button, Dropdown, message, Popconfirm } from 'antd';
 
+import { Auth } from '../../App';
+
 import Nav from '../Nav';
 import SiderLeft from '../SiderLeft';
 import School from '../School';
@@ -18,6 +20,9 @@ const { Header, Content } = Layout;
  * 退出登录确定按钮点击事件
  */
 function handleLogoutConfirm() {
+  Auth.signout(() => {
+    sessionStorage.clear();
+  });
   window.location.href = '/login';
 }
 
@@ -33,21 +38,21 @@ function handleAccountMenuClick(e) {
  * 账户下拉菜单
  */
 const AccountMenu = (
-  <Menu onClick={handleAccountMenuClick}>
-    <Menu.Item key="1">
-      <Icon type="snippets" />账户信息
+  <Menu>
+    <Menu.Item key="1" onClick={handleAccountMenuClick}>
+      <Icon type="snippets" />我的账户
     </Menu.Item>
     <Menu.Item key="2">
       <Icon type="logout" />
       <Popconfirm placement="top" title="确定退出登录吗？" onConfirm={handleLogoutConfirm} okText="确定" cancelText="取消">
-        退出
+        退出应用
       </Popconfirm>
     </Menu.Item>
   </Menu>
 );
 
 export default ({location}) => (
-  <Layout style={{ minHeight: window.innerHeight }}>
+  <Layout style={{minHeight: window.innerHeight}}>
     <Header className="header">
       <div className="logo">
         <img src={logo} alt="logo" />

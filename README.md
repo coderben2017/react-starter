@@ -1,23 +1,22 @@
 # React Starter with Ant Design
 
-### environments
-1. npm
-3. yarn
+### Install Dependencies
+```npm install```
 
-### how to start
-1. ```yarn install```
-2. ```yarn start```
+### Start
+```npm start```
 
-### how to build
-- ```yarn build```
+### Build
+- ```npm run build```
 
-### functions in this project
-- 按需加载
-- 路由
-- 布局
+### How To Change Port
+- <i>package.json</i>（row 15）
 
-### tools used to set up the project
-- creat-react-app
+### plugins
+- create-react-app
+- react-router
+- antd
+- access-control
 
 ### author
 - Jin Ben（coderben2016@126.com）
