@@ -1,7 +1,9 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Icon, Button, Dropdown, message, Popconfirm } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Button, Dropdown, Popconfirm } from 'antd';
 
+import './index.css';
+import logo from '../../assets/logo.png';
 import { Auth } from '../../App';
 
 import Nav from '../Nav';
@@ -11,9 +13,6 @@ import Student from '../Student';
 import User from '../User';
 import Page404 from '../Page404';
 
-import './index.css';
-import logo from '../../assets/logo.png';
-
 const { Header, Content } = Layout;
 
 /**
@@ -22,8 +21,8 @@ const { Header, Content } = Layout;
 function handleLogoutConfirm() {
   Auth.signout(() => {
     sessionStorage.clear();
+    window.location.href = '/login';
   });
-  window.location.href = '/login';
 }
 
 /**
@@ -31,7 +30,7 @@ function handleLogoutConfirm() {
  * @param e 事件对象
  */
 function handleAccountMenuClick(e) {
-  message.info(e.key);
+  console.log(e.key);
 }
 
 /**

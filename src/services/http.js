@@ -16,15 +16,17 @@ const jsonAuthHeaders = {
 	'content-type': 'application/json'
 };
 
-console.log(jsonAuthHeaders);
-
 
 /**
  * 请求体数据转FormData格式
  * @param {Object} config http请求
  */
 function dataToFormData (request) {
-	request.data.schoolCode = sessionStorage.getItem('schoolCode');
+	if (sessionStorage.getItem('schoolCode')) {
+		request.data.schoolCode = sessionStorage.getItem('schoolCode');
+	} else {
+		message.error('请检查地址栏是否填写了schoolCode');
+	}
 	request.data = qs.stringify(request.data);
 	return request;
 }
