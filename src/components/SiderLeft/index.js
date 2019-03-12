@@ -1,10 +1,36 @@
 import React, { Component } from 'react';
 import { Menu, Layout, Icon } from 'antd';
+import { $common } from "../../services/http";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 export default class Index extends Component {
+
+  componentDidMount() {
+    $common
+      .get('/inner/user/v1/getUserForLoginName', {
+        params: {
+          loginName: sessionStorage.getItem('casUser')
+        }
+      })
+      .then(({data}) => {
+        console.log(data);
+
+        $common
+          .get('/api/menu/v1/getMenuListByUserId', {
+            params: {
+              userId: '1',
+              projectName: 'jwgl',
+              positionId: '1'
+            }
+          })
+          .then(res => {
+            console.log(res)
+          });
+      });
+  }
+
   render() {
     return (
       <Sider

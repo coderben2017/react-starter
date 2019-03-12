@@ -4,4 +4,4 @@ export const URLConfig = {
   businessUrl: '',
   oosUploadUrl: '',
   oosPreviewUrl: ''
-}
+};

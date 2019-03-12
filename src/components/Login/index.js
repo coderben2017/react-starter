@@ -1,47 +1,46 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Form, Icon, Input, Button, Checkbox, message, Layout } from 'antd';
+import axios from 'axios';
+import qs from 'qs';
 
-import { $login } from '../../services/http';
+import { URLConfig } from '../../utils/config';
 import { Auth } from '../../App';
 import './index.css';
+
+const $http = axios.create({
+  baseURL: URLConfig.commonUrl,
+  headers: {
+    'content-type': 'application/x-www-form-urlencoded'
+  }
+});
 
 class LoginForm extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      form: {
-        username: '',
-        password: ''
-      },
+      username: '',
+      password: '',
       redirectToReferrer: false
     };
   }
 
   handleUsernameChange = (e) => {
-    const { password } = this.state.form;
     this.setState({
-			form: {
-				username: e.target.value,
-        password
-			}
+      username: e.target.value,
     });
   }
 
   handlePasswordChange = (e) => {
-    const { username } = this.state.form;
     this.setState({
-      form: {
-        username,
-        password: e.target.value
-      }
+      password: e.target.value
     });
   }
 
   handleRememberChange = (e) => {
     console.log(e.target.checked)
   }
-  
+
   handleForgetPasswordClick = (e) => {
     e.preventDefault();
     message.info('请联系管理员重置密码');
@@ -49,25 +48,35 @@ class LoginForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    $login
-      .post('/api/user/v1/login', this.state.form)
+    if (!sessionStorage.getItem('schoolCode')) {
+      message.error('请检查地址栏是否填写了schoolCode');
+      return;
+    }
+    $http
+      .post('/api/user/v1/login', qs.stringify({
+        username: this.state.username,
+        password: this.state.password,
+        schoolCode: sessionStorage.getItem('schoolCode')
+      }))
       .then(({data}) => {
-        if (!data) return;
-        sessionStorage.setItem('user', JSON.stringify(data.user));
-        sessionStorage.setItem('studentMessage', JSON.stringify(data.studentMessage));
-        sessionStorage.setItem('token', data.jwt);
+        const {commonInfo, studentInfo, teacherInfo} = data;
+        sessionStorage.setItem('user', JSON.stringify(commonInfo.user));
+        sessionStorage.setItem('casUser', commonInfo.user.loginName);
+        sessionStorage.setItem('studentInfo', JSON.stringify(studentInfo));
+        sessionStorage.setItem('teacherInfo', JSON.stringify(teacherInfo));
+        axios.defaults.headers.common['Authorization'] = commonInfo.jwt;
         Auth.authenticate(() => {
-					this.setState({
-						redirectToReferrer: true
-					});
-				});
+          this.setState({
+            redirectToReferrer: true
+          });
+        });
       })
   }
-  
+
   render() {
     let { from } = this.props.location.state || {from: {pathname: "/"}};
     let { redirectToReferrer } = this.state;
-  
+
     if (redirectToReferrer) return <Redirect to={from} />;
 
     return (

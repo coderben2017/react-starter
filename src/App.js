@@ -6,11 +6,13 @@ import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
 
+const casUser = sessionStorage.getItem('casUser');
+
 /**
  * 权限控制
  */
 export const Auth = {
-  isAuthenticated: false,
+  isAuthenticated: Boolean(casUser),
 
   authenticate(callback = () => {}) {
     this.isAuthenticated = true;

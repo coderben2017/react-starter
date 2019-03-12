@@ -6,4 +6,4 @@ module.exports = function overrides(config, env) {
     config,
   );
   return config;
-}
+};

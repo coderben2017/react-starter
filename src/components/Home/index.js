@@ -22,6 +22,7 @@ function handleLogoutConfirm() {
   Auth.signout(() => {
     sessionStorage.clear();
     window.location.href = '/login';
+    // window.location.href = 'http://ms.do-ok.com:7000';
   });
 }
 
