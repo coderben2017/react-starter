@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 
-import './index.css';
+import './Nav.css';
 
 export default ({path}) => (
   <Menu className="menu" theme="dark" mode="horizontal" selectedKeys={[path]}>

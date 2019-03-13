@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import './Page404.css';
 
 export default ({location}) => (
   <div className="container-404">

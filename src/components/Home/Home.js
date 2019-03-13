@@ -2,16 +2,16 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Icon, Button, Dropdown, Popconfirm } from 'antd';
 
-import './index.css';
+import './Home.css';
 import logo from '../../assets/logo.png';
 import { Auth } from '../../App';
 
-import Nav from '../Nav';
-import SiderLeft from '../SiderLeft';
-import School from '../School';
-import Student from '../Student';
-import User from '../User';
-import Page404 from '../Page404';
+import Nav from '../Nav/Nav';
+import SiderLeft from '../SiderLeft/SiderLeft';
+import School from '../School/School';
+import Student from '../Student/Student';
+import User from '../User/User';
+import Page404 from '../Page404/Page404';
 
 const { Header, Content } = Layout;
 
@@ -27,7 +27,7 @@ function handleLogoutConfirm() {
 }
 
 /**
- * 账户下拉菜单点击事件
+ * 账户菜单点击事件
  * @param e 事件对象
  */
 function handleAccountMenuClick(e) {
@@ -35,7 +35,7 @@ function handleAccountMenuClick(e) {
 }
 
 /**
- * 账户下拉菜单
+ * 账户菜单组件
  */
 const AccountMenu = (
   <Menu>
@@ -51,7 +51,7 @@ const AccountMenu = (
   </Menu>
 );
 
-export default ({location}) => (
+const Home = ({location}) => (
   <Layout style={{minHeight: window.innerHeight}}>
     <Header className="header">
       <div className="logo">
@@ -86,4 +86,6 @@ export default ({location}) => (
       </Layout>
     </Layout>
   </Layout>
-)
+);
+
+export default Home;
