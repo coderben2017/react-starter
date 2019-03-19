@@ -2,6 +2,8 @@
     float: left;
     line-height: 64px;
     font-size: 16px;
+    max-width: 100%;
+    overflow: auto;
 }
 
 .menu .ant-menu-item {/* 解决小屏幕状态白色字体在白底下看不清问题 */

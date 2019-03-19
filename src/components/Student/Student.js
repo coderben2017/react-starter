@@ -1,9 +1,7 @@
 import React  from 'react';
 
-const Student = () => {
+export default () => {
   return (
     <div>student component</div>
   )
 };
-
-export default Student;

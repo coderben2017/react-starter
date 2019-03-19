@@ -6,6 +6,6 @@ export default ({location}) => (
     <strong>
       <i>{location.pathname}</i>
     </strong>
-    : 404 not found
+    : 该页面未找到
   </div>
 )

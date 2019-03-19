@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Icon, Button, Dropdown, Popconfirm } from 'antd';
+import { Layout, Menu, Icon, Button, Dropdown, Popconfirm } from 'antd';
 
 import './Home.css';
 import logo from '../../assets/logo.png';
@@ -20,8 +20,9 @@ const { Header, Content } = Layout;
  */
 function handleLogoutConfirm() {
   Auth.signout(() => {
+    const schoolCode = sessionStorage.getItem('schoolCode');
     sessionStorage.clear();
-    window.location.href = '/login';
+    window.location.href = `/login?sc=${schoolCode}`;
     // window.location.href = 'http://ms.do-ok.com:7000';
   });
 }
@@ -51,7 +52,7 @@ const AccountMenu = (
   </Menu>
 );
 
-const Home = ({location}) => (
+export default ({location}) => (
   <Layout style={{minHeight: window.innerHeight}}>
     <Header className="header">
       <div className="logo">
@@ -60,7 +61,7 @@ const Home = ({location}) => (
       <Nav path={location.pathname.slice(1)}></Nav>
       <div className="account">
         <Dropdown overlay={AccountMenu}>
-          <Button type="dashed" size="large">
+          <Button htmlType={'button'} type="dashed" size="large">
             <Icon type="user" /> 管理员 <Icon type="down" />
           </Button>
         </Dropdown>
@@ -69,11 +70,6 @@ const Home = ({location}) => (
     <Layout>
       <SiderLeft/>
       <Layout className="layout-content">
-        <Breadcrumb className="breadcrumb">
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
         <Content className="content">
           <Switch>
             <Redirect exact from="/" to="/school"></Redirect>
@@ -87,5 +83,3 @@ const Home = ({location}) => (
     </Layout>
   </Layout>
 );
-
-export default Home;

@@ -1,9 +1,7 @@
 import React  from 'react';
 
-const School = () => {
+export default () => {
   return (
     <div>school component</div>
   )
 };
-
-export default School;
