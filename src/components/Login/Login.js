@@ -20,7 +20,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
     if (!sessionStorage.getItem('schoolCode')) {
       message.error('请检查地址栏是否填写了schoolCode');
@@ -43,7 +43,7 @@ const LoginForm = () => {
           setRedirectToReferrer(true);
         });
       })
-  };
+  }
 
   const { from } = {from: {pathname: "/"}};
   if (redirectToReferrer) {
