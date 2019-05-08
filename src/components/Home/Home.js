@@ -82,4 +82,4 @@ export default ({location}) => (
       </Layout>
     </Layout>
   </Layout>
-);
+)

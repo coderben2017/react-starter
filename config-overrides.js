@@ -7,7 +7,8 @@ const {
 module.exports = {
   webpack: override(
     addLessLoader({
-      javascriptEnabled: true
+      javascriptEnabled: true,
+      modifyVars: { '@primary-color': '#8fc31f' },
     }),
     fixBabelImports("babel-plugin-import", {
       libraryName: "antd",

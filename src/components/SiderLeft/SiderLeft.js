@@ -1,34 +1,30 @@
 import React, { useState, useEffect }  from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, Layout, Icon, message, Modal, Button } from 'antd';
 import { $common } from "../../services/http";
+import axios from "axios";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-
-/**
- * 获取菜单
- * @param positionId
- * @param userId
- */
-function getMenu(positionId, userId) {
-  $common
-    .get('/api/menu/v1/getMenuListByUserId', {
-      params: {
-        userId: userId,
-        projectName: 'jwgl',
-        positionId: positionId
-      }
-    })
-    .then(({data}) => {
-      console.log(data)
-    });
-}
-
 export default () => {
-
   const [modalVisible, setModalVisible] = useState(false);
   const [positionArray, setPositionArray] = useState([]);
+  const [menu, setMenu] = useState([]);
+
+  function getMenu(positionId, userId) {
+    $common
+      .get('/api/menu/v1/getMenuListByUserId', {
+        params: {
+          userId: userId,
+          projectName: 'jwgl',
+          positionId: positionId
+        }
+      })
+      .then(({data}) => {
+        setMenu(data[0].children)
+      });
+  }
 
   function handlePositionClick(positionId, userId) {
     setModalVisible(false);
@@ -43,15 +39,20 @@ export default () => {
         }
       })
       .then(({data}) => {
-        console.log(data);
-        const treeviewPositionDtoList = data.commonInfo.treeviewPositionDtoList;
+        const {commonInfo, studentInfo, teacherInfo} = data;
+        sessionStorage.setItem('user', JSON.stringify(commonInfo.user));
+        sessionStorage.setItem('casUser', commonInfo.user.loginName);
+        sessionStorage.setItem('schoolCode', commonInfo.user.schoolCode);
+        sessionStorage.setItem('studentInfo', JSON.stringify(studentInfo));
+        sessionStorage.setItem('teacherInfo', JSON.stringify(teacherInfo));
+        axios.defaults.headers.common['Authorization'] = commonInfo.jwt;
+        const treeviewPositionDtoList = commonInfo.treeviewPositionDtoList;
         const positions = [];
         for (let i = 0; i < treeviewPositionDtoList.length; i++) {
           if (treeviewPositionDtoList[i].positionId) {
             positions.push(treeviewPositionDtoList[i])
           }
         }
-
         if (positions.length === 0) {
           message.error('当前账户无职务，请配置后重试')
         } else if (positions.length === 1) {
@@ -60,7 +61,6 @@ export default () => {
         } else {
           setModalVisible(true);
           setPositionArray(positions)
-
         }
       });
   }, []);
@@ -72,19 +72,57 @@ export default () => {
     >
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        defaultSelectedKeys={[]}
+        defaultOpenKeys={[]}
         className="menu-side"
       >
-        <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
-          <Menu.Item key="1">option1</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
-          <Menu.Item key="5">option5</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub3" title={<span><Icon type="notification" />subnav 3</span>}>
-          <Menu.Item key="9">option9</Menu.Item>
-        </SubMenu>
+        {
+          menu.map(firstLevelItem => {
+            if (firstLevelItem.children && firstLevelItem.children.length > 0) {
+              return (
+                <SubMenu key={firstLevelItem.id} title={<span><Icon type="bars" />{firstLevelItem.text}</span>}>
+                  {
+                    firstLevelItem.children.map(secondLevelItem => {
+                      if (secondLevelItem.children && secondLevelItem.children.length > 0) {
+                        return (
+                          <SubMenu key={secondLevelItem.id} title={<span><Icon type="bars" />{secondLevelItem.text}</span>}>
+                            {
+                              secondLevelItem.children.map(thirdLevelItem => {
+                                return (
+                                  <Menu.Item key={thirdLevelItem.id}>
+                                    <Link to={thirdLevelItem.url}>
+                                      <span className={'text-black'}>{thirdLevelItem.text}</span>
+                                    </Link>
+                                  </Menu.Item>
+                                )
+                              })
+                            }
+                          </SubMenu>
+                        )
+                      } else {
+                        return (
+                          <Menu.Item key={secondLevelItem.id}>
+                            <Link to={secondLevelItem.url}>
+                              <span className={'text-black'}>{secondLevelItem.text}</span>
+                            </Link>
+                          </Menu.Item>
+                        )
+                      }
+                    })
+                  }
+                </SubMenu>
+              )
+            } else {
+              return (
+                <Menu.Item key={firstLevelItem.id}>
+                  <Link to={firstLevelItem.url}>
+                    <span className={'text-black'}>{firstLevelItem.text}</span>
+                  </Link>
+                </Menu.Item>
+              )
+            }
+          })
+        }
       </Menu>
       <Modal
         align={{}}
@@ -110,4 +148,4 @@ export default () => {
       </Modal>
     </Sider>
   )
-};
+}

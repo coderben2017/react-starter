@@ -6,7 +6,7 @@ import './App.css';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 
-const casUser = sessionStorage.getItem('casUser');
+// const casUser = sessionStorage.getItem('casUser');
 
 /**
  * 私有路由组件
@@ -26,7 +26,8 @@ const PrivateRoute = ({component: Component, ...rest}) => {
  * 权限控制
  */
 export const Auth = {
-  isAuthenticated: Boolean(casUser),
+  // isAuthenticated: Boolean(casUser),
+  isAuthenticated: false,
 
   authenticate(callback = () => {}) {
     this.isAuthenticated = true;
