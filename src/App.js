@@ -1,12 +1,27 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { configure } from 'mobx';
+import { Provider } from 'mobx-react';
 import { message } from 'antd';
+
+import schoolStore from './stores/schoolStore';
 
 import './App.css';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 
 // const casUser = sessionStorage.getItem('casUser');
+
+const stores = {
+  schoolStore
+};
+
+// For easier debugging
+window._stores = stores;
+
+configure({
+  enforceActions: true
+})
 
 /**
  * 私有路由组件
@@ -59,12 +74,14 @@ const App = () => {
   });
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <PrivateRoute path="/" component={Home} />
-      </Switch>
-    </BrowserRouter >
+    <Provider {...stores}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <PrivateRoute path="/" component={Home} />
+        </Switch>
+      </BrowserRouter >
+    </Provider>
   )
 };
 
