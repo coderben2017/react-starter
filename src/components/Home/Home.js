@@ -52,34 +52,39 @@ const AccountMenu = (
   </Menu>
 );
 
-export default ({location}) => (
-  <Layout style={{minHeight: window.innerHeight}}>
-    <Header className="header">
-      <div className="logo">
-        <img src={logo} alt="logo" />
-      </div>
-      <Nav path={location.pathname.slice(1)}></Nav>
-      <div className="account">
-        <Dropdown overlay={AccountMenu}>
-          <Button htmlType={'button'} type="dashed" size="large">
-            <Icon type="user" /> 管理员 <Icon type="down" />
-          </Button>
-        </Dropdown>
-      </div>
-    </Header>
-    <Layout>
-      <SiderLeft/>
-      <Layout className="layout-content">
-        <Content className="content">
-          <Switch>
-            <Redirect exact from="/" to="/school"></Redirect>
-            <Route exact path="/school" component={School}></Route>
-            <Route exact path="/student" component={Student}></Route>
-            <Route exact path="/user" component={User}></Route>
-            <Route component={Page404}></Route>
-          </Switch>
-        </Content>
+export default class Home extends React.Component {
+  render() {
+    const { location } = this.props;
+    return (
+      <Layout style={{minHeight: window.innerHeight}}>
+        <Header className="header">
+          <div className="logo">
+            <img src={logo} alt="logo" />
+          </div>
+          <Nav path={location.pathname.slice(1)}></Nav>
+          <div className="account">
+            <Dropdown overlay={AccountMenu}>
+              <Button htmlType={'button'} type="dashed" size="large">
+                <Icon type="user" /> 管理员 <Icon type="down" />
+              </Button>
+            </Dropdown>
+          </div>
+        </Header>
+        <Layout>
+          <SiderLeft/>
+          <Layout className="layout-content">
+            <Content className="content">
+              <Switch>
+                <Redirect exact from="/" to="/school"></Redirect>
+                <Route exact path="/school" component={School}></Route>
+                <Route exact path="/student" component={Student}></Route>
+                <Route exact path="/user" component={User}></Route>
+                <Route component={Page404}></Route>
+              </Switch>
+            </Content>
+          </Layout>
+        </Layout>
       </Layout>
-    </Layout>
-  </Layout>
-)
+    );
+  }
+}

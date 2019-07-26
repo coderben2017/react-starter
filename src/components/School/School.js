@@ -1,9 +1,7 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
 import { Button, Modal, Form, Input, Radio, message } from 'antd';
 
 const CollectionCreateForm = Form.create({ name: 'addForm' })(
-  // eslint-disable-next-line
   class extends React.Component {
     render() {
       const { visible, onCancel, onCreate, form, title } = this.props;
@@ -47,20 +45,18 @@ const CollectionCreateForm = Form.create({ name: 'addForm' })(
   }
 );
 
-@inject('schoolStore')
-@observer
-class CollectionsPage extends React.Component {
+export default class CollectionsPage extends React.Component {
   state = {
     visible: false,
   };
 
   showModal = () => {
     this.setState({ visible: true });
-  }
+  };
 
   handleCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   handleCreate = () => {
     const form = this.formRef.props.form;
@@ -73,16 +69,14 @@ class CollectionsPage extends React.Component {
       message.success('保存成功！');
       form.resetFields();
       this.setState({ visible: false });
-      this.props.schoolStore.setTitle(values.title);
     });
-  }
+  };
 
   saveFormRef = (formRef) => {
     this.formRef = formRef;
-  }
+  };
 
   render() {
-    const { title } = this.props.schoolStore;
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>新增</Button>
@@ -91,11 +85,8 @@ class CollectionsPage extends React.Component {
           visible={this.state.visible}
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
-          title={title}
         />
       </div>
     );
   }
 }
-
-export default CollectionsPage;
